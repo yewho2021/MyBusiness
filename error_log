@@ -1,0 +1,36 @@
+[24-Mar-2026 12:07:56 Asia/Kuala_Lumpur] PHP Fatal error:  Cannot use App\Http\Controllers\Admin\MediaController as MediaController because the name is already in use in /home/syncoffice/public_html/routes/admin.php on line 21
+[16-May-2026 13:04:14 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php:26
+Stack trace:
+#0 /home/afirst/office.afirst.com.my/vendor/composer/autoload_real.php(25): require()
+#1 /home/afirst/office.afirst.com.my/vendor/autoload.php(22): ComposerAutoloaderInit626b9e7ddd47fb7eff9aaa53cce0c9ad::getLoader()
+#2 /home/afirst/office.afirst.com.my/artisan(9): require('/home/afirst/of...')
+#3 {main}
+  thrown in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php on line 26
+[16-May-2026 13:04:14 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php:26
+Stack trace:
+#0 /home/afirst/office.afirst.com.my/vendor/composer/autoload_real.php(25): require()
+#1 /home/afirst/office.afirst.com.my/vendor/autoload.php(22): ComposerAutoloaderInit626b9e7ddd47fb7eff9aaa53cce0c9ad::getLoader()
+#2 /home/afirst/office.afirst.com.my/artisan(9): require('/home/afirst/of...')
+#3 {main}
+  thrown in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php on line 26
+[16-May-2026 13:04:14 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php:26
+Stack trace:
+#0 /home/afirst/office.afirst.com.my/vendor/composer/autoload_real.php(25): require()
+#1 /home/afirst/office.afirst.com.my/vendor/autoload.php(22): ComposerAutoloaderInit626b9e7ddd47fb7eff9aaa53cce0c9ad::getLoader()
+#2 /home/afirst/office.afirst.com.my/artisan(9): require('/home/afirst/of...')
+#3 {main}
+  thrown in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php on line 26
+[16-May-2026 13:04:14 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php:26
+Stack trace:
+#0 /home/afirst/office.afirst.com.my/vendor/composer/autoload_real.php(25): require()
+#1 /home/afirst/office.afirst.com.my/vendor/autoload.php(22): ComposerAutoloaderInit626b9e7ddd47fb7eff9aaa53cce0c9ad::getLoader()
+#2 /home/afirst/office.afirst.com.my/artisan(9): require('/home/afirst/of...')
+#3 {main}
+  thrown in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php on line 26
+[16-May-2026 13:04:16 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php:26
+Stack trace:
+#0 /home/afirst/office.afirst.com.my/vendor/composer/autoload_real.php(25): require()
+#1 /home/afirst/office.afirst.com.my/vendor/autoload.php(22): ComposerAutoloaderInit626b9e7ddd47fb7eff9aaa53cce0c9ad::getLoader()
+#2 /home/afirst/office.afirst.com.my/artisan(9): require('/home/afirst/of...')
+#3 {main}
+  thrown in /home/afirst/office.afirst.com.my/vendor/composer/platform_check.php on line 26

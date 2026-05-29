@@ -1,0 +1,36 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # ── 1. Strip /public from visible URLs (301 redirect) ──
+    # If someone visits /public/login → redirect to /login
+    RewriteCond %{THE_REQUEST} \s/public/([^\s?]*)
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    # ── 2. Block direct access to sensitive files/folders ──
+    RewriteRule ^\.env - [F,L]
+    RewriteRule ^composer\.(json|lock)$ - [F,L]
+    RewriteRule ^storage/ - [F,L]
+    RewriteRule ^\.htaccess - [F,L]
+
+    # ── 3. Collision bypass: physical folders that are also Laravel routes ──
+    # Send these directly to Laravel (skip directory listing)
+    RewriteRule ^(database|backup|tests|resources|config|routes)(/.*)?$ public/index.php [L,QSA]
+
+    # ── 4. Serve vendor JS libraries directly (e.g. /vendor/echarts/) ──
+    # If the file physically exists under vendor/echarts/, serve it as-is
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^vendor/echarts/ - [L]
+
+    # ── 5. Internal rewrite: everything else → public/ ──
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+

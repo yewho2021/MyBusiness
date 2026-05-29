@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # ── 1. Strip /public from visible URLs (301 redirect) ──
+    # If someone visits /public/login → redirect to /login
+    RewriteCond %{THE_REQUEST} \s/public/([^\s?]*)
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    # ── 2. Block direct access to sensitive files/folders ──
+    RewriteRule ^\.env - [F,L]
+    RewriteRule ^composer\.(json|lock)$ - [F,L]
+    RewriteRule ^storage/ - [F,L]
+    RewriteRule ^\.htaccess - [F,L]
+
+    # ── 3. Collision bypass: physical folders that are also Laravel routes ──
+    # Send these directly to Laravel (skip directory listing)
+    RewriteRule ^(database|backup|tests|resources|config|routes)(/.*)?$ public/index.php [L,QSA]
+
+    # ── 4. Internal rewrite: everything → public/ ──
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

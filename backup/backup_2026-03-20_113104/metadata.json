@@ -1,0 +1,21 @@
+{
+    "backup_id": 13,
+    "job_id": 1,
+    "job_name": "Full Project",
+    "folder_name": "backup_2026-03-20_113104",
+    "created_at": "2026-03-20T11:31:33+08:00",
+    "total_files": 230,
+    "total_size": 60022796,
+    "manifest_count": 230,
+    "include_paths": [
+        "\/home\/syncoffice"
+    ],
+    "exclude_paths": [
+        "\/home\/syncoffice\/public_html\/tests",
+        "\/home\/syncoffice\/backup"
+    ],
+    "include_database": true,
+    "description": "Contains 9 update(s): 1.2.3 (Admin Menu Reorganization & Backup Integration), 1.2.4 (Database Manager: Refactoring, Memory Safe Export & UI Polish), 1.0.1 (Post-Verification Setup Wizard), 1.0.2 (Auth Logic Fix & Company Setup), 1.0.3 (Login Fix: Missing Admin Record), 1.0.4 (Enforce Required Basic Info in Wizard), 1.1.0 (LHDN-Compliant Entity Simplification), 1.2.0 (SaaS Dashboard Layout), 2026.03.08 (Agent Module Review + Login Tracking System)",
+    "laravel_version": "11.48.0",
+    "php_version": "8.2.29"
+}

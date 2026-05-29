@@ -1,0 +1,20 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 5
+
+    paths:
+        - app/
+
+    excludePaths:
+        - app/Console/Kernel.php
+
+    ignoreErrors:
+        # Cookie-based auth uses custom attribute bag
+        - '#Call to an undefined method Illuminate\\Http\\Request::attributes\(\)#'
+        # Dynamic property access on stdClass (database query results)
+        - '#Access to an undefined property stdClass::\$#'
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

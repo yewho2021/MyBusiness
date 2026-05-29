@@ -1,0 +1,20 @@
+{
+    "backup_id": 20,
+    "job_id": 1,
+    "job_name": "Full Project",
+    "folder_name": "backup_2026-03-22_145949",
+    "created_at": "2026-03-22T15:00:04+08:00",
+    "total_files": 147,
+    "total_size": 30128874,
+    "manifest_count": 147,
+    "include_paths": [
+        "\/home\/syncoffice\/public_html"
+    ],
+    "exclude_paths": [
+        "\/home\/syncoffice\/public_html\/tests"
+    ],
+    "include_database": true,
+    "description": "Contains 1 update(s): 1.8.0 (Admin Login Activity Log)",
+    "laravel_version": "11.48.0",
+    "php_version": "8.2.29"
+}
