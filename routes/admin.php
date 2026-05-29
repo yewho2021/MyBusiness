@@ -29,6 +29,8 @@ use App\Http\Controllers\Admin\GlobalSearchController;
 use App\Http\Controllers\Admin\SystemStatusController;
 use App\Http\Controllers\Admin\TelegramController;
 use App\Http\Controllers\Admin\TelegramReportController;
+use App\Http\Controllers\Admin\RefBankController;
+use App\Http\Controllers\Admin\RefIndustryController;
 
 // ─── Health Check (no auth required — for monitoring) ───
 Route::get('health', function () {
@@ -355,6 +357,30 @@ Route::middleware(['admin.auth', 'admin.access'])->group(function () {
     Route::put('telegram/targets/{id}', [TelegramController::class, 'targetsUpdate'])->name('admin.telegram.targets.update');
     Route::post('telegram/targets/{id}/default', [TelegramController::class, 'targetsDefault'])->name('admin.telegram.targets.default');
     Route::delete('telegram/targets/{id}', [TelegramController::class, 'targetsDelete'])->name('admin.telegram.targets.delete');
+
+    // ── B2B Reference Data ────────────────────────────
+
+    // Banks
+    Route::get('ref-banks', [RefBankController::class, 'index'])->name('admin.ref-banks.index');
+    Route::post('ref-banks', [RefBankController::class, 'store'])->name('admin.ref-banks.store');
+    Route::get('ref-banks/{id}/edit', [RefBankController::class, 'edit'])->name('admin.ref-banks.edit');
+    Route::put('ref-banks/{id}', [RefBankController::class, 'update'])->name('admin.ref-banks.update');
+    Route::delete('ref-banks/{id}', [RefBankController::class, 'destroy'])->name('admin.ref-banks.destroy');
+    Route::post('ref-banks/{id}/toggle-status', [RefBankController::class, 'toggleStatus'])->name('admin.ref-banks.toggle-status');
+
+    // Industries
+    Route::get('ref-industries', [RefIndustryController::class, 'index'])->name('admin.ref-industries.index');
+    Route::post('ref-industries', [RefIndustryController::class, 'store'])->name('admin.ref-industries.store');
+    Route::get('ref-industries/{id}/edit', [RefIndustryController::class, 'edit'])->name('admin.ref-industries.edit');
+    Route::put('ref-industries/{id}', [RefIndustryController::class, 'update'])->name('admin.ref-industries.update');
+    Route::delete('ref-industries/{id}', [RefIndustryController::class, 'destroy'])->name('admin.ref-industries.destroy');
+    Route::post('ref-industries/{id}/toggle-status', [RefIndustryController::class, 'toggleStatus'])->name('admin.ref-industries.toggle-status');
+
+    // Industry Subcategories
+    Route::post('ref-industries/{id}/subcategories', [RefIndustryController::class, 'storeSubcategory'])->name('admin.ref-industries.subcategories.store');
+    Route::put('ref-subcategories/{id}', [RefIndustryController::class, 'updateSubcategory'])->name('admin.ref-subcategories.update');
+    Route::delete('ref-subcategories/{id}', [RefIndustryController::class, 'destroySubcategory'])->name('admin.ref-subcategories.destroy');
+    Route::post('ref-subcategories/{id}/toggle-status', [RefIndustryController::class, 'toggleSubcategoryStatus'])->name('admin.ref-subcategories.toggle-status');
 
     // ── Telegram Reports ──────────────────────────────
     Route::get('telegram/reports', [TelegramReportController::class, 'index'])->name('admin.telegram.reports');

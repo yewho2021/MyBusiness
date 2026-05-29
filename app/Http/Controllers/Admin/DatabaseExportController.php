@@ -589,4 +589,9 @@ class DatabaseExportController extends Controller implements HasMiddleware
 
     /**
      * Build a short human-readable preview of a SQL statement.
+     */
+    private function sqlPreview(string $sql): string
+    {
+        return \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', $sql)), 120);
+    }
 }
