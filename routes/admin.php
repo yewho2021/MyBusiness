@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\TelegramReportController;
 use App\Http\Controllers\Admin\RefBankController;
 use App\Http\Controllers\Admin\RefIndustryController;
 use App\Http\Controllers\Admin\CompanyAgreementController;
+use App\Http\Controllers\Admin\CompanyController;
 
 // ─── Health Check (no auth required — for monitoring) ───
 Route::get('health', function () {
@@ -382,6 +383,12 @@ Route::middleware(['admin.auth', 'admin.access'])->group(function () {
     Route::put('ref-subcategories/{id}', [RefIndustryController::class, 'updateSubcategory'])->name('admin.ref-subcategories.update');
     Route::delete('ref-subcategories/{id}', [RefIndustryController::class, 'destroySubcategory'])->name('admin.ref-subcategories.destroy');
     Route::post('ref-subcategories/{id}/toggle-status', [RefIndustryController::class, 'toggleSubcategoryStatus'])->name('admin.ref-subcategories.toggle-status');
+
+    // Companies
+    Route::get('companies', [CompanyController::class, 'index'])->name('admin.companies.index');
+    Route::get('companies/{id}', [CompanyController::class, 'show'])->name('admin.companies.show');
+    Route::put('companies/{id}/status', [CompanyController::class, 'updateStatus'])->name('admin.companies.update-status');
+    Route::delete('companies/{id}', [CompanyController::class, 'destroy'])->name('admin.companies.destroy');
 
     // Company Agreements
     Route::get('company-agreements', [CompanyAgreementController::class, 'index'])->name('admin.company-agreements.index');
