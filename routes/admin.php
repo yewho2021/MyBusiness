@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\TelegramController;
 use App\Http\Controllers\Admin\TelegramReportController;
 use App\Http\Controllers\Admin\RefBankController;
 use App\Http\Controllers\Admin\RefIndustryController;
+use App\Http\Controllers\Admin\CompanyAgreementController;
 
 // ─── Health Check (no auth required — for monitoring) ───
 Route::get('health', function () {
@@ -381,6 +382,16 @@ Route::middleware(['admin.auth', 'admin.access'])->group(function () {
     Route::put('ref-subcategories/{id}', [RefIndustryController::class, 'updateSubcategory'])->name('admin.ref-subcategories.update');
     Route::delete('ref-subcategories/{id}', [RefIndustryController::class, 'destroySubcategory'])->name('admin.ref-subcategories.destroy');
     Route::post('ref-subcategories/{id}/toggle-status', [RefIndustryController::class, 'toggleSubcategoryStatus'])->name('admin.ref-subcategories.toggle-status');
+
+    // Company Agreements
+    Route::get('company-agreements', [CompanyAgreementController::class, 'index'])->name('admin.company-agreements.index');
+    Route::get('company-agreements/create', [CompanyAgreementController::class, 'create'])->name('admin.company-agreements.create');
+    Route::post('company-agreements', [CompanyAgreementController::class, 'store'])->name('admin.company-agreements.store');
+    Route::get('company-agreements/{id}/edit', [CompanyAgreementController::class, 'edit'])->name('admin.company-agreements.edit');
+    Route::put('company-agreements/{id}', [CompanyAgreementController::class, 'update'])->name('admin.company-agreements.update');
+    Route::delete('company-agreements/{id}', [CompanyAgreementController::class, 'destroy'])->name('admin.company-agreements.destroy');
+    Route::post('company-agreements/{id}/toggle-active', [CompanyAgreementController::class, 'toggleActive'])->name('admin.company-agreements.toggle-active');
+    Route::get('company-agreements/{id}/preview', [CompanyAgreementController::class, 'preview'])->name('admin.company-agreements.preview');
 
     // ── Telegram Reports ──────────────────────────────
     Route::get('telegram/reports', [TelegramReportController::class, 'index'])->name('admin.telegram.reports');
