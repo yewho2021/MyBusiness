@@ -33,6 +33,8 @@ use App\Http\Controllers\Admin\RefBankController;
 use App\Http\Controllers\Admin\RefIndustryController;
 use App\Http\Controllers\Admin\CompanyAgreementController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CompanyEmailConfigController;
+use App\Http\Controllers\Admin\CompanyEmailTemplateController;
 
 // ─── Health Check (no auth required — for monitoring) ───
 Route::get('health', function () {
@@ -399,6 +401,25 @@ Route::middleware(['admin.auth', 'admin.access'])->group(function () {
     Route::delete('company-agreements/{id}', [CompanyAgreementController::class, 'destroy'])->name('admin.company-agreements.destroy');
     Route::post('company-agreements/{id}/toggle-active', [CompanyAgreementController::class, 'toggleActive'])->name('admin.company-agreements.toggle-active');
     Route::get('company-agreements/{id}/preview', [CompanyAgreementController::class, 'preview'])->name('admin.company-agreements.preview');
+
+    // Email SMTP Configs
+    Route::get('email-configs', [CompanyEmailConfigController::class, 'index'])->name('admin.email-configs.index');
+    Route::get('email-configs/create', [CompanyEmailConfigController::class, 'create'])->name('admin.email-configs.create');
+    Route::post('email-configs', [CompanyEmailConfigController::class, 'store'])->name('admin.email-configs.store');
+    Route::get('email-configs/{id}/edit', [CompanyEmailConfigController::class, 'edit'])->name('admin.email-configs.edit');
+    Route::put('email-configs/{id}', [CompanyEmailConfigController::class, 'update'])->name('admin.email-configs.update');
+    Route::delete('email-configs/{id}', [CompanyEmailConfigController::class, 'destroy'])->name('admin.email-configs.destroy');
+    Route::post('email-configs/{id}/toggle-status', [CompanyEmailConfigController::class, 'toggleStatus'])->name('admin.email-configs.toggle-status');
+
+    // Email Templates
+    Route::get('email-templates', [CompanyEmailTemplateController::class, 'index'])->name('admin.email-templates.index');
+    Route::get('email-templates/create', [CompanyEmailTemplateController::class, 'create'])->name('admin.email-templates.create');
+    Route::post('email-templates', [CompanyEmailTemplateController::class, 'store'])->name('admin.email-templates.store');
+    Route::get('email-templates/{id}/edit', [CompanyEmailTemplateController::class, 'edit'])->name('admin.email-templates.edit');
+    Route::put('email-templates/{id}', [CompanyEmailTemplateController::class, 'update'])->name('admin.email-templates.update');
+    Route::delete('email-templates/{id}', [CompanyEmailTemplateController::class, 'destroy'])->name('admin.email-templates.destroy');
+    Route::post('email-templates/{id}/toggle-status', [CompanyEmailTemplateController::class, 'toggleStatus'])->name('admin.email-templates.toggle-status');
+    Route::get('email-templates/{id}/preview', [CompanyEmailTemplateController::class, 'preview'])->name('admin.email-templates.preview');
 
     // ── Telegram Reports ──────────────────────────────
     Route::get('telegram/reports', [TelegramReportController::class, 'index'])->name('admin.telegram.reports');
