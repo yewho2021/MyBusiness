@@ -2,24 +2,89 @@
 
 ## Pre-Deploy Checklist
 
-Before every deploy, run these checks locally:
+**MANDATORY before every deploy.** Every issue we've hit in production came from skipping one of these steps.
 
+### Step 1: PHP Syntax Check
 ```bash
-# 1. PHP syntax check on all app files
-php -l app/Models/*.php
-php -l app/Http/Controllers/Admin/*.php
+# Check ALL PHP files for syntax errors
+find app/ -name "*.php" -exec php -l {} \; 2>&1 | grep -v "No syntax errors"
+```
+Zero output = pass. Any output = fix before proceeding.
 
-# 2. Verify routes load without errors
+### Step 2: Route Verification
+```bash
 php artisan route:list
+```
+If this errors, a controller has a missing import, wrong class name, or syntax issue.
 
-# 3. Compile Blade views (catches template errors)
+### Step 3: Blade View Compilation
+```bash
 php artisan view:clear && php artisan view:cache
+```
+Catches Blade syntax errors. Does NOT catch runtime errors (null access, missing variables).
 
-# 4. Check for uncommitted changes
-git status
+### Step 4: Dependency Check
+```bash
+# Verify no imports reference packages that aren't installed
+grep -r "use Spatie\\" app/ --include="*.php"     # Only if spatie packages installed
+grep -r "use Intervention\\" app/ --include="*.php" # Only if intervention installed
+```
+If a model/controller imports a package not in `composer.json`, it will crash at runtime.
+
+### Step 5: Data Integrity Check
+```bash
+# Check for old table names (from migration)
+grep -rn "tbl_partners\|tbl_products[^_]\|tbl_attributes[^_]\|tbl_company_admin_role\|tbl_system_\|tbl_company_tarc" app/ --include="*.php"
+
+# Check for old column names
+grep -rn "companyid\|mobileno[^_]\|roleid\|datetime_lastlogin\|datetime_lastclick\|companyname" app/ --include="*.php" resources/ --include="*.blade.php"
+
+# Check for old model class names
+grep -rn "use App\\\\Models\\\\Partner;\|use App\\\\Models\\\\Product;\|use App\\\\Models\\\\Attribute;\|use App\\\\Models\\\\CompanyAdminRole" app/ --include="*.php"
+```
+Zero output = pass. Any output = old reference that will crash.
+
+### Step 6: Security Check — Tenant Isolation
+```bash
+# Models with company_id MUST have BelongsToCompany trait (except Company, CompanyAdmin)
+grep -L "BelongsToCompany" app/Models/Company*.php | grep -v "Company.php$\|CompanyAdmin.php$\|CompanyAgreement.php$\|CompanyVerificationToken.php$\|CompanyAuditLog.php$"
+```
+Any output = model missing tenant isolation. Products/partners/attributes could leak across companies.
+
+### Step 7: Encrypted Route Token Check
+```bash
+# No raw ->id in route() calls (URLs must use encrypted tokens)
+grep -rn "route(.*->id)" resources/views/ --include="*.blade.php" | grep -v "product_ids\|categories\|attributes\|checkbox"
+
+# No findOrFail($id) in controllers (must use findByTokenOrFail)
+grep -rn "findOrFail(\$id)" app/Http/Controllers/ --include="*.php"
+```
+Zero output = pass. Any output = raw IDs exposed in URLs.
+
+### Step 8: Form Field Consistency
+```bash
+# Check views don't reference model properties that don't exist in $fillable
+# Common after schema migration — form shows field, model doesn't save it
+grep -rn "is_virtual\|is_downloadable\|external_url\|button_text\|purchase_note" resources/views/ --include="*.blade.php"
+```
+If form references fields not in the model's `$fillable`, data is silently lost on save.
+
+### Step 9: Password Hashing Check
+```bash
+# If resetting passwords via script, verify $2y$ prefix (not $2b$ from Python bcrypt)
+# Laravel ONLY accepts $2y$ hashes. Python bcrypt generates $2b$ — WILL CRASH.
+# Always use PHP's password_hash() for Laravel passwords.
 ```
 
-If any step fails, fix the issue before pushing.
+### Step 10: Final Commit
+```bash
+git status                    # Check for uncommitted changes
+git diff --stat               # Review what changed
+git add <specific files>      # Stage only intended files
+git commit -m "message"       # Commit with clear message
+```
+
+**If ANY step fails, DO NOT DEPLOY. Fix the issue first.**
 
 ---
 
