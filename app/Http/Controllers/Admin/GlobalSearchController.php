@@ -62,7 +62,7 @@ class GlobalSearchController extends Controller
                 'type'  => 'admin',
                 'title' => $admin->name,
                 'icon'  => 'fas fa-user',
-                'url'   => route('admin.users.edit', $admin->id),
+                'url'   => route('admin.users.edit', $admin->getRouteToken()),
                 'meta'  => $admin->username,
             ];
         }

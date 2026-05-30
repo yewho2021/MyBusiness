@@ -154,7 +154,7 @@ class AdminController extends Controller
         $admin->save();
 
         $tab = $request->get('_tab', 'profile');
-        return redirect()->route('admin.users.edit', ['token' => $admin->getRouteToken(), 'tab' => $tab])
+        return redirect()->route('admin.users.edit', ['id' => $admin->getRouteToken(), 'tab' => $tab])
             ->with('success', 'Admin updated successfully.');
     }
 
